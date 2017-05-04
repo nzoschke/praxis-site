@@ -34,3 +34,6 @@ Fetch a single row from the table.
 
 Write a new row to a table.
 
+### Delete
+
+Delete row(s) from a table.
