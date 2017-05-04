@@ -1,4 +1,4 @@
-# Praxis
+# Praxis Website
 
 ## Running locally
 
