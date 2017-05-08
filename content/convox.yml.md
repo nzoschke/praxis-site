@@ -65,6 +65,9 @@ workflows:
       - test
       - create: staging/myapp-$branch
       - deploy: staging/myapp-$branch
+    update:
+      - test
+      - deploy: staging/myapp-$branch
     close:
       - delete: staging/myapp-$branch
   merge:
@@ -303,29 +306,99 @@ services:
 
 ### command
 
+The command to be executed when the timer triggers.
+
+```yaml
+timers:
+  cleanup:
+    command: bin/cleanup
+```
+
 ### schedule
 
+A [cron-like schedule expression](#) that sets when the timer will trigger.
+
+```yaml
+timers:
+  cleanup:
+    schedule: 0 3 * * *
+```
+
 ### service
+
+The service in which the command should be run.
+
+```yaml
+timers:
+  cleanup:
+    service: web
+```
 
 ## workflows
 
 ### change
 
-#### close
+Actions defined within a change block take place when the state of a pull request changes. There are 3 types of changes: create, update, and close
+
+```yaml
+workflows:
+  change:
+    create:
+      - test
+      - create: staging/myapp-$branch
+      - deploy: staging/myapp-$branch
+    update:
+      - test
+      - deploy: staging/myapp-$branch
+    close:
+      - delete: staging/myapp-$branch
+```
 
 #### create
 
-#### delete
+Actions defined within a create block take place when a pull request is created.
 
-#### deploy
+```yaml
+workflows:
+  change:
+    create:
+      - test
+      - create: staging/myapp-$branch
+      - deploy: staging/myapp-$branch
+```
 
 #### update
 
+Actions defined within an update block take place when a pull request is updated.
+
+```yaml
+workflows:
+  change:
+    update:
+      - test
+      - deploy: staging/myapp-$branch
+```
+
+#### close
+
+Actions defined within the close block take place when a pull request is closed.
+
+```yaml
+workflows:
+  change:
+    close:
+      - delete: staging/myapp-$branch
+```
+
 ### merge
 
-#### app
+Actions defined within a merge block take place when commits are merged into or pushed directly to the specified branch.
 
-#### deploy
-
-#### run
+```yaml
+  merge:
+    master:
+      - test
+      - deploy: staging/myapp-staging
+      - copy: production/myapp-production
+```
 
