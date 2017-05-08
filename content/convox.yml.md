@@ -41,6 +41,7 @@ services:
     command: bin/web
       development: bin/web-dev
       test: bin/web-test
+    cpu: 512
     dockerfile: Dockerfile.alt
     entrypoint: bin/entrypoint.sh
     environment:
@@ -48,11 +49,10 @@ services:
     health: /auth
     links:
       - api
+    memory: 1024
     port: http:3000
     privileged: true
     scale: 2-10
-      cpu: 512
-      memory: 1024
 tables:
 timers:
   cleanup:
@@ -175,6 +175,15 @@ services:
   web:
     command: bin/web
 ```
+### cpu
+
+The number of CPU shares in an instance to dedicate to a particular service. Each CPU core on an instance represents 1024 shares.
+
+```yaml
+services:
+  web:
+    cpu: 512
+```
 
 ### dockerfile
 
@@ -237,6 +246,16 @@ services:
       - api
 ```
 
+### memory
+
+The amount of instance memory, in MB, that should be dedicated to processes of this service type.
+
+```yaml
+services:
+  web:
+    memory: 1024
+```
+
 ### port
 
 The protocol and port on which the process is listening.
@@ -276,28 +295,6 @@ The range of count of processes that should be run for the service. The exact va
 services:
  web:
   scale: 2-10
-```
-
-### cpu
-
-The number of CPU shares in an instance to dedicate to a particular service. Each CPU core on an instance represents 1024 shares.
-
-```yaml
-services:
-  web:
-    scale:
-      cpu: 512
-```
-
-#### memory
-
-The amount of instance memory, in MB, that should be dedicated to processes of this service type.
-
-```yaml
-services:
-  web:
-    scale:
-      memory: 1024
 ```
 
 ## tables
