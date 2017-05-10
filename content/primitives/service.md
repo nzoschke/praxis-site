@@ -1,16 +1,8 @@
-+++
-title = "Service"
-
-[menu.main]
-identifier = "service"
-parent = "primitives"
-+++
+# Service
 
 A service is a blueprint for processes. It has its own image, default command, and scale.
 
-## Actions
-
-### List
+## List
 
 List the services that make up an application.
 
