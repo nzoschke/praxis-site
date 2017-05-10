@@ -1,36 +1,26 @@
-+++
-title = "App"
+# App
 
-[menu.main]
-identifier = "app"
-parent = "primitives"
-+++
-
-An app is the basic unit of deployment and configuration.
-
-## Actions
-
-### List
+## List
 
 List all apps.
 
-### Create
+## Create
 
 Create a new app.
 
-### Get
+## Get
 
 Fetch info about an app.
 
-### Delete
+## Delete
 
 Delete an app.
 
-### Logs
+## Logs
 
 Stream an app’s logs.
 
-### Registry
+## Registry
 
 Fetch info about an app’s registry.
 

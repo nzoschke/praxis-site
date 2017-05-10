@@ -1,12 +1,9 @@
-+++
-title = "convox.yml"
+---
+title: convox.yml reference
+weight: 0
+---
 
-[menu.main]
-  identifier = "convox.yml"
-  parent = ""
-+++
-
-The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
+# convox.yml
 
 ```yaml
 balancers:
@@ -77,11 +74,11 @@ workflows:
       - copy: production/myapp-production
 ```
 
+The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
+
 ## balancers
 
 ### draining-timeout
-
-The amount of time in seconds to allow a draining balancer to keep active connections open. After the timeout, the load balancer will close all connections to a deregistered or unhealthy instance. The minimum value is 1 and the maximum is 3600. The default value is 60.
 
 ```yaml
 balancers:
@@ -89,9 +86,9 @@ balancers:
     draining-timeout: 300
 ```
 
-### idle-timeout
+The amount of time in seconds to allow a draining balancer to keep active connections open. After the timeout, the load balancer will close all connections to a deregistered or unhealthy instance. The minimum value is 1 and the maximum is 3600. The default value is 60.
 
-The amount of time in seconds a balancer should wait for data to be sent by the client of a connection. If no data is sent, the balancer will terminate the front-end connection. Valid values are between 1 and 3600. The default is 60.
+### idle-timeout
 
 ```yaml
 balancers:
@@ -99,11 +96,11 @@ balancers:
     idle-timeout: 3000
 ```
 
+The amount of time in seconds a balancer should wait for data to be sent by the client of a connection. If no data is sent, the balancer will terminate the front-end connection. Valid values are between 1 and 3600. The default is 60.
+
 ## caches
 
 ### expire
-
-The default time to live for items in the cache.
 
 ```yaml
 caches:
@@ -111,11 +108,11 @@ caches:
     expire: 1d
 ```
 
+The default time to live for items in the cache.
+
 ## keys
 
 ### roll
-
-How often to roll keys.
 
 ```yaml
 keys:
@@ -123,11 +120,11 @@ keys:
     roll: 30d
 ```
 
+How often to roll keys.
+
 ## queues
 
 ### timeout
-
-The default timeout for items in a queue.
 
 ```yaml
 queues:
@@ -135,11 +132,11 @@ queues:
     timeout: 1m
 ```
 
+The default timeout for items in a queue.
+
 ## resources
 
 ### type
-
-The type of resource to create.
 
 ```yaml
 resources:
@@ -147,11 +144,11 @@ resources:
     type: postgres
 ```
 
+The type of resource to create.
+
 ## services
 
 ### agent
-
-Boolean value to set whether this service should be run as an agent (exactly one per instance). The default value is `false`.
 
 ```yaml
 services:
@@ -159,9 +156,9 @@ services:
     agent: true
 ```
 
-### build
+Boolean value to set whether this service should be run as an agent (exactly one per instance). The default value is `false`.
 
-The directory inside the project in which to find the Dockerfile needed to build a particular service. Paths are relative to the location of `convox.yml`.
+### build
 
 ```yaml
 services:
@@ -169,18 +166,19 @@ services:
     build: .
 ```
 
-### command
+The directory inside the project in which to find the Dockerfile needed to build a particular service. Paths are relative to the location of `convox.yml`.
 
-The default command to run for a particular service. This overides `CMD` in the Dockerfile.
+### command
 
 ```yaml
 services:
   web:
     command: bin/web
 ```
-### cpu
 
-The number of CPU shares in an instance to dedicate to a particular service. Each CPU core on an instance represents 1024 shares.
+The default command to run for a particular service. This overides `CMD` in the Dockerfile.
+
+### cpu
 
 ```yaml
 services:
@@ -188,9 +186,9 @@ services:
     cpu: 512
 ```
 
-### dockerfile
+The number of CPU shares in an instance to dedicate to a particular service. Each CPU core on an instance represents 1024 shares.
 
-An alternate filename of the Dockerfile that should be used to build the a particular service's image, if not "Dockerfile".
+### dockerfile
 
 ```yaml
 services:
@@ -198,9 +196,9 @@ services:
     dockerfile: Dockerfile.alt
 ```
 
-### entrypoint
+An alternate filename of the Dockerfile that should be used to build the a particular service's image, if not "Dockerfile".
 
-Can be used to define an entrypoint script or override ENTRYPOINT in the Dockerfile.
+### entrypoint
 
 ```yaml
 services:
@@ -208,9 +206,9 @@ services:
     entrypoint: bin/entrypoint.sh
 ```
 
-### environment
+Can be used to define an entrypoint script or override ENTRYPOINT in the Dockerfile.
 
-Define default environment variables for the service.
+### environment
 
 ```yaml
 services:
@@ -219,9 +217,9 @@ services:
       - FOO=bar
 ```
 
-### health
+Define default environment variables for the service.
 
-The path that should be requested by the balancer's HTTP healthcheck of the service.
+### health
 
 ```yaml
 services:
@@ -229,9 +227,9 @@ services:
     health: /auth
 ```
 
-### image
+The path that should be requested by the balancer's HTTP healthcheck of the service.
 
-The image that should be used for running the service.
+### image
 
 ```yaml
 services:
@@ -239,9 +237,9 @@ services:
     image: my/monitor
 ```
 
-### links
+The image that should be used for running the service.
 
-Specifying a link to another process instructs Convox to provide the linking process with environment variables that allow it to connect to the target process.
+### links
 
 ```yaml
 services:
@@ -249,9 +247,9 @@ services:
       - api
 ```
 
-### memory
+Specifying a link to another process instructs Convox to provide the linking process with environment variables that allow it to connect to the target process.
 
-The amount of instance memory, in MB, that should be dedicated to processes of this service type.
+### memory
 
 ```yaml
 services:
@@ -259,9 +257,9 @@ services:
     memory: 1024
 ```
 
-### port
+The amount of instance memory, in MB, that should be dedicated to processes of this service type.
 
-The protocol and port on which the process is listening.
+### port
 
 ```yaml
 services:
@@ -269,9 +267,9 @@ services:
     port: http:3000
 ```
 
-### privileged
+The protocol and port on which the process is listening.
 
-A boolean value that sets whether the processes of this service type should be run as privileged containers on the instance. The default value is `false`.
+### privileged
 
 ```yaml
 services:
@@ -279,9 +277,9 @@ services:
     privileged: true
 ```
 
-### resources
+A boolean value that sets whether the processes of this service type should be run as privileged containers on the instance. The default value is `false`.
 
-The resources enumerated in the `resources` section that should be available to the service.
+### resources
 
 ```yaml
 services:
@@ -290,9 +288,9 @@ services:
       - database
 ```
 
-### scale
+The resources enumerated in the `resources` section that should be available to the service.
 
-The range of count of processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm.
+### scale
 
 ```yaml
 services:
@@ -300,13 +298,13 @@ services:
   scale: 2-10
 ```
 
+The range of count of processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm.
+
 ## tables
 
 ## timers
 
 ### command
-
-The command to be executed when the timer triggers.
 
 ```yaml
 timers:
@@ -314,9 +312,9 @@ timers:
     command: bin/cleanup
 ```
 
-### schedule
+The command to be executed when the timer triggers.
 
-A [cron-like schedule expression](#) that sets when the timer will trigger.
+### schedule
 
 ```yaml
 timers:
@@ -324,9 +322,9 @@ timers:
     schedule: 0 3 * * *
 ```
 
-### service
+A [cron-like schedule expression](#) that sets when the timer will trigger.
 
-The service in which the command should be run.
+### service
 
 ```yaml
 timers:
@@ -334,12 +332,12 @@ timers:
     service: web
 ```
 
+The service in which the command should be run.
+
 ## workflows
 
 ### change
 
-Actions defined within a change block take place when the state of a pull request changes. There are 3 types of changes: create, update, and close
-
 ```yaml
 workflows:
   change:
@@ -353,11 +351,11 @@ workflows:
     close:
       - delete: staging/myapp-$branch
 ```
+
+Actions defined within a change block take place when the state of a pull request changes. There are 3 types of changes: create, update, and close
 
 #### create
 
-Actions defined within a create block take place when a pull request is created.
-
 ```yaml
 workflows:
   change:
@@ -367,9 +365,9 @@ workflows:
       - deploy: staging/myapp-$branch
 ```
 
-#### update
+Actions defined within a create block take place when a pull request is created.
 
-Actions defined within an update block take place when a pull request is updated.
+#### update
 
 ```yaml
 workflows:
@@ -379,9 +377,9 @@ workflows:
       - deploy: staging/myapp-$branch
 ```
 
-#### close
+Actions defined within an update block take place when a pull request is updated.
 
-Actions defined within the close block take place when a pull request is closed.
+#### close
 
 ```yaml
 workflows:
@@ -390,15 +388,18 @@ workflows:
       - delete: staging/myapp-$branch
 ```
 
+Actions defined within the close block take place when a pull request is closed.
+
 ### merge
 
-Actions defined within a merge block take place when commits are merged into or pushed directly to the specified branch.
-
 ```yaml
+workflows:
   merge:
     master:
       - test
       - deploy: staging/myapp-staging
       - copy: production/myapp-production
 ```
+
+Actions defined within a merge block take place when commits are merged into or pushed directly to the specified branch.
 

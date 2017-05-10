@@ -1,24 +1,16 @@
-+++
-title = "Object"
-
-[menu.main]
-identifier = "object"
-parent = "primitives"
-+++
+# Object
 
 An object is a blob of data stored outside of the process filesystem.
 
-## Actions
-
-### Exists
+## Exists
 
 Check by name if an object exists in the store.
 
-### Fetch
+## Fetch
 
 Fetch an object by name from the store.
 
-### Store
+## Store
 
 Store an object.
 

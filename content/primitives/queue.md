@@ -1,20 +1,12 @@
-+++
-title = "Queue"
-
-[menu.main]
-identifier = "queue"
-parent = "primitives"
-+++
+# Queue
 
 A queue is a datastore containing a sequential list of data items. Can be used to implement a job queue for a worker process, for example.
 
-## Actions
-
-### Fetch
+## Fetch
 
 Fetch the item from the front of the queue.
 
-### Store
+## Store
 
 Add an item to the end of the queue.
 

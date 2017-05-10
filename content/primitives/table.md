@@ -1,39 +1,31 @@
-+++
-title = "Table"
-
-[menu.main]
-identifier = "table"
-parent = "primitives"
-+++
+# Table
 
 A table is a collection of data in a database used by the application.
 
-## Actions
-
-### List
+## List
 
 List tables available to the app.
 
-### Create
+## Create
 
 Create a new table.
 
-### Get
+## Get
 
 Fetch info about the table.
 
-### Truncate
+## Truncate
 
 Delete all rows in the table.
 
-### Fetch
+## Fetch
 
 Fetch a single row from the table.
 
-### Store
+## Store
 
 Write a new row to a table.
 
-### Delete
+## Delete
 
 Delete row(s) from a table.
