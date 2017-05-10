@@ -1,10 +1,9 @@
-+++
-title = "convox.yml"
+---
+title: convox.yml reference
+weight: 0
+---
 
-[menu.main]
-  identifier = "convox.yml"
-  parent = ""
-+++
+# convox.yml
 
 The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
 
