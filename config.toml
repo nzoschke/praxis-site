@@ -1,4 +1,4 @@
 baseURL = "http://example.org/"
 languageCode = "en-us"
 title = "Convox Praxis"
-theme = "docdock"
+theme = "docuapi"
