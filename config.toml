@@ -2,3 +2,23 @@ baseURL = "http://example.org/"
 languageCode = "en-us"
 title = "Convox Praxis"
 theme = "docuapi"
+
+# Code higlighting settings
+pygmentsCodefences = true
+pygmentsCodeFencesGuesSsyntax = false
+pygmentsOptions = ""
+pygmentsStyle = "monokai"
+pygmentsUseClasses = true
+
+defaultContentLanguage = "en"
+
+[params]
+search = true
+  
+# Configure the language example tabs.
+[[params.language_tabs]]
+key = "go"
+name = "Go" 
+[[params.language_tabs]]
+key = "shell"
+name = "Shell" 
