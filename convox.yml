@@ -1,3 +1,4 @@
 services:
   web:
-    port: http:1313
+    cdn: ${HOST}
+    port: 1313
