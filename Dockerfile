@@ -1,11 +1,10 @@
 FROM ubuntu:16.04
 
+RUN apt-get -y update && apt-get install -y python-pip
+RUN pip install pygments
+
 ADD https://github.com/spf13/hugo/releases/download/v0.20.7/hugo_0.20.7_Linux-64bit.deb /tmp
-
 RUN dpkg -i /tmp/hugo_0.20.7_Linux-64bit.deb
-
-RUN apt-get update \
-    && apt-get install -y python3-pygments
 
 WORKDIR /app
 
