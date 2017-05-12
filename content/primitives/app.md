@@ -1,13 +1,11 @@
 # App
 
-## AppCreate
+## Create
 
-Creates a new app.
-
-### Request
+Create a new App
 
 ```shell
-$ curl -X POST --data "name=test-app" $RACK_URL/apps
+$ curl -X POST --data "name=example" $RACK_URL/apps
 ```
 
 ```go
@@ -16,11 +14,11 @@ package main
 import "github.com/convox/praxis/sdk/rack"
 
 func main() {
-  r, err := rack.NewFromEnv()
-
-  app, err := r.AppCreate("test-app")
+  app, err := rack.AppCreate("example")
 }
 ```
+
+### Request
 
 `POST /apps`
 
@@ -28,15 +26,13 @@ func main() {
 
 The following should be sent as POST data:
 
-| Parameter | Default | Required | Description              |
-|-----------|---------|----------|--------------------------|
-| **name**  |         | yes      | The name of the new App. |
-
-### Response
+| Parameter | Default | Required | Description             |
+|-----------|---------|----------|-------------------------|
+| **name**  |         | yes      | The name of the new App |
 
 ```shell
 {
-  "name": "test-app",
+  "name": "example",
   "release": "",
   "status": "creating"
 }
@@ -44,24 +40,28 @@ The following should be sent as POST data:
 
 ```go
 &types.App{
-  Name:    "test-app",
+  Name:    "example",
   Release: "",
   Status:  "creating",
 }
 ```
 
-A JSON object with the following fields is returned:
+### Response
 
-| Parameter | Description                     |
-|-----------|---------------------------------|
-| name      | The name of the App.            |
-| release   | The current Release of the App. |
-| status    | The current status of the App.  |
+An object with the following fields is returned:
 
-## AppDelete
+| Parameter | Description                    |
+|-----------|--------------------------------|
+| name      | The name of the App            |
+| release   | The current Release of the App |
+| status    | The current status of the App  |
+
+## Delete
+
+Delete an App
 
 ```shell
-curl -X DELETE https://example.com/apps/test-app
+$ curl -X DELETE $RACK_URL/apps/example
 ```
 
 ```go
@@ -70,24 +70,20 @@ package main
 import "github.com/convox/praxis/sdk/rack"
 
 func main() {
-  r, err := rack.NewFromEnv()
-
-  err := r.AppDelete("test-app")
+  err := rack.AppDelete("example")
 }
 ```
 
-> The HTTP request returns an empty response with a status code.
-
-Deletes a specific app.
-
-### HTTP Request
+### Request
 
 `DELETE /apps/test-app`
 
-## AppGet
+## Get
+
+Get information about an App
 
 ```shell
-curl https://example.com/apps/test-app
+$ curl $RACK_URL/apps/example
 ```
 
 ```go
@@ -96,32 +92,46 @@ package main
 import "github.com/convox/praxis/sdk/rack"
 
 func main() {
-  r, err := rack.NewFromEnv()
-
-  app, err := r.AppGet("test-app")
+  app, err := rack.AppGet("test-app")
 }
 ```
 
-> The HTTP request returns JSON structured like this:
-
-```json
-{
-  "Name":"test-app",
-  "Release":"RJREHTRSNKP",
-  "Status":"running"
-}
-```
-
-Fetch info about a specific app.
-
-### HTTP Request
+### Request
 
 `GET /apps/test-app`
 
-## AppList
+```shell
+{
+  "Name": "example",
+  "Release": "RJREHTRSNKP",
+  "Status": "running"
+}
+```
+
+```go
+&types.App{
+  Name:    "example",
+  Release: "",
+  Status:  "creating",
+}
+```
+
+### Response
+
+An object with the following fields is returned:
+
+| Parameter | Description                    |
+|-----------|--------------------------------|
+| name      | The name of the App            |
+| release   | The current Release of the App |
+| status    | The current status of the App  |
+
+## List
+
+List available Apps
 
 ```shell
-curl http://example.com/apps
+$ curl $RACK_URL/apps
 ```
 
 ```go
@@ -130,39 +140,53 @@ package main
 import "github.com/convox/praxis/sdk/rack"
 
 func main() {
-  r, err := rack.NewFromEnv()
-
-  apps, err := r.AppList()
+  apps, err := rack.AppList()
 }
 ```
 
-> The HTTP request returns JSON structured like this:
+### Request
 
-```json
+`POST /apps`
+
+```shell
 [
   {
-    "Name":"foo",
-    "Release":"RYEQCJGDNC",
-    "Status":"running"
+    "Name": "example",
+    "Release": "RYEQCJGDNC",
+    "Status": "running"
   },
   {
-    "Name":"test-app",
-    "Release":"",
-    "Status":"creating"
+    "Name": "example2",
+    "Release": "",
+    "Status": "creating"
   }
 ]
 ```
 
-Returns a list of all apps in this rack.
+```go
+&types.App{
+  Name:    "example",
+  Release: "",
+  Status:  "creating",
+}
+```
 
-### HTTP Request
+### Response
 
-`POST /apps`
+A list of objects with the following fields are returned:
 
-## AppLogs
+| Parameter | Description                    |
+|-----------|--------------------------------|
+| name      | The name of the App            |
+| release   | The current Release of the App |
+| status    | The current status of the App  |
+
+## Logs
+
+Stream available logs for an App.
 
 ```shell
-curl https://example.com/apps/test-app/logs
+$ curl $RACK_URL/apps/example/logs
 ```
 
 ```go
@@ -171,16 +195,33 @@ package main
 import "github.com/convox/praxis/sdk/rack"
 
 func main() {
-  r, err := rack.NewFromEnv()
-
-  logs, err := rack.AppLogs("test-app", types.LogsOptions{Follow: true})
-
-  io.Copy(os.Stdout, logs)
+  logs, err := rack.AppLogs("example", types.LogsOptions{
+    Follow: true,
+  })
 }
 ```
 
-Stream an app’s logs.
-
-### HTTP Request
+### Request
 
 `GET /apps/test-app/logs`
+
+### Parameters
+
+| Parameter  | Default   | Required | Description                      |
+|------------|-----------|----------|----------------------------------|
+| **filter** |           | no       | Filter log output                |
+| **follow** | *false*   | no       | Continue to stream new logs      |
+| **since**  | *2m*      | no       | Display logs since this duration |
+
+```shell
+2017-01-01 00:00:00 example/web/937fa3b04027 test logs
+2017-01-01 00:00:00 example/web/937fa3b04027 more logs
+```
+
+```go
+io.Copy(os.Stdout, logs)
+```
+
+### Response
+
+The logs are streamed in the HTTP response.
