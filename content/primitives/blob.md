@@ -1,6 +1,6 @@
-# Object
+# Blob
 
-An object is a blob of data stored outside of the process filesystem.
+A Blob is a key/value store for large amounts of data.
 
 ## Exists
 
