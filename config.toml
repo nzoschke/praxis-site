@@ -14,11 +14,11 @@ defaultContentLanguage = "en"
 
 [params]
 search = true
-  
+
 # Configure the language example tabs.
 [[params.language_tabs]]
-key = "go"
-name = "Go" 
-[[params.language_tabs]]
 key = "shell"
-name = "Shell" 
+name = "HTTP"
+[[params.language_tabs]]
+key = "go"
+name = "Go"
