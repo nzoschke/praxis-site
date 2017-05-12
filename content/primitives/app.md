@@ -7,7 +7,7 @@ Creates a new app.
 ### Request
 
 ```shell
-$ curl -X POST --data "name=test-app" https://example.com/apps
+$ curl -X POST --data "name=test-app" $RACK_URL/apps
 ```
 
 ```go
