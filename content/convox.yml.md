@@ -5,65 +5,65 @@ weight: 10
 
 # convox.yml
 
-```yaml
-caches:
-  sessions:
-    expire: 1d
-keys:
-  secret:
-    roll: 30d
-queues:
-  mail:
-    timeout: 1m
-resources:
-  database:
-    type: postgres
-services:
-  api:
-    image: my/api
-    resources:
-      - database
-  monitor:
-    image: my/monitor
-    scale: 1
-  web:
-    build: .
-    command:
-      development: bin/web-dev
-      test: bin/web-test
-      production: bin/web-prod
-    environment:
-      - FOO=bar
-    health: /auth
-    port: 3000
-    scale:
-      count: 2-10
-      cpu: 512
-      memory: 1024
-timers:
-  cleanup:
-    schedule: 0 3 * * *
-    command: bin/cleanup
-    service: web
-workflows:
-  change:
-    create:
-      - test
-      - create: staging/example-$branch
-      - deploy: staging/example-$branch
-    update:
-      - test
-      - deploy: staging/example-$branch
-    close:
-      - delete: staging/example-$branch
-  merge:
-    master:
-      - test
-      - deploy: staging/example-staging
-      - copy: production/example-production
-```
-
 The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
+
+<pre class="inline">
+  <a href="#caches">caches</a>:
+    sessions:
+      expire: 1d
+  <a href="#keys">keys</a>:
+    secret:
+      roll: 30d
+  <a href="#queues">queues</a>:
+    mail:
+      timeout: 1m
+  <a href="#resources">resources</a>:
+    database:
+      type: postgres
+  <a href="#services">services</a>:
+    api:
+      image: my/api
+      resources:
+        - database
+    monitor:
+      image: my/monitor
+      scale: 1
+    web:
+      build: .
+      command:
+        development: bin/web-dev
+        test: bin/web-test
+        production: bin/web-prod
+      environment:
+        - FOO=bar
+      health: /auth
+      port: 3000
+      scale:
+        count: 2-10
+        cpu: 512
+        memory: 1024
+  <a href="#timers">timers</a>:
+    cleanup:
+      schedule: 0 3 * * *
+      command: bin/cleanup
+      service: web
+  <a href="#workflows">workflows</a>:
+    change:
+      create:
+        - test
+        - create: staging/example-$branch
+        - deploy: staging/example-$branch
+      update:
+        - test
+        - deploy: staging/example-$branch
+      close:
+        - delete: staging/example-$branch
+    merge:
+      master:
+        - test
+        - deploy: staging/example-staging
+        - copy: production/example-production
+</pre>
 
 ## caches
 
