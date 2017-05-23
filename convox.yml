@@ -1,5 +1,6 @@
 services:
   web:
+    certificate: ${HOST}
     command:
       test: make test
     port: 1313
