@@ -8,19 +8,19 @@ weight: 10
 The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
 
 <pre class="inline">
-  caches:
+  <a href="#caches">caches</a>:
     sessions:
       expire: 1d
-  keys:
+  <a href="#keys">keys</a>:
     secret:
       roll: 30d
-  queues:
+  <a href="#queues">queues</a>:
     mail:
       timeout: 1m
-  resources:
+  <a href="#resources">resources</a>:
     database:
       type: postgres
-  services:
+  <a href="#services">services</a>:
     api:
       image: my/api
       resources:
@@ -42,12 +42,12 @@ The `convox.yml` file is a configuration file used to describe your application 
         count: 2-10
         cpu: 512
         memory: 1024
-  timers:
+  <a href="#timers">timers</a>:
     cleanup:
       schedule: 0 3 * * *
       command: bin/cleanup
       service: web
-  workflows:
+  <a href="#workflows">workflows</a>:
     change:
       create:
         - test
