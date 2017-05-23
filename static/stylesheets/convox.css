@@ -2,6 +2,7 @@ pre.inline {
   float: none;
   background: none;
   color: black;
+  text-shadow: none;
 }
 
 pre.inline a {
