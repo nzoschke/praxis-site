@@ -8,3 +8,11 @@ pre.inline {
 pre.inline a {
   color: black;
 }
+
+.tocify-wrapper > img {
+  display: block;
+  max-width: 100%;
+  height: 32px;
+  margin-left: 7px;
+  margin-top: 11px;
+}
