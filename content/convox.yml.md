@@ -5,75 +5,95 @@ weight: 10
 
 # convox.yml
 
-The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs.
+```shell
+caches:
+  sessions:
+    expire: 1d
+keys:
+  secret:
+    roll: 30d
+queues:
+  mail:
+    timeout: 1m
+resources:
+  database:
+    type: postgres
+services:
+  api:
+    image: my/api
+    resources:
+      - database
+  monitor:
+    image: my/monitor
+    scale: 1
+  web:
+    build: .
+    command:
+      development: bin/web-dev
+      test: bin/web-test
+      production: bin/web-prod
+    environment:
+      - FOO=bar
+    health: /auth
+    port: 3000
+    scale:
+      count: 2-10
+      cpu: 512
+      memory: 1024
+timers:
+  cleanup:
+    schedule: 0 3 * * *
+    command: bin/cleanup
+    service: web
+workflows:
+  change:
+    create:
+      - test
+      - create: staging/example-$branch
+      - deploy: staging/example-$branch
+    update:
+      - test
+      - deploy: staging/example-$branch
+    close:
+      - delete: staging/example-$branch
+  merge:
+    master:
+      - test
+      - deploy: staging/example-staging
+      - copy: production/example-production
+```
 
-<pre class="inline">
-  <a href="#caches">caches</a>:
-    sessions:
-      expire: 1d
-  <a href="#keys">keys</a>:
-    secret:
-      roll: 30d
-  <a href="#queues">queues</a>:
-    mail:
-      timeout: 1m
-  <a href="#resources">resources</a>:
-    database:
-      type: postgres
-  <a href="#services">services</a>:
-    api:
-      image: my/api
-      resources:
-        - database
-    monitor:
-      image: my/monitor
-      scale: 1
-    web:
-      build: .
-      command:
-        development: bin/web-dev
-        test: bin/web-test
-        production: bin/web-prod
-      environment:
-        - FOO=bar
-      health: /auth
-      port: 3000
-      scale:
-        count: 2-10
-        cpu: 512
-        memory: 1024
-  <a href="#timers">timers</a>:
-    cleanup:
-      schedule: 0 3 * * *
-      command: bin/cleanup
-      service: web
-  <a href="#workflows">workflows</a>:
-    change:
-      create:
-        - test
-        - create: staging/example-$branch
-        - deploy: staging/example-$branch
-      update:
-        - test
-        - deploy: staging/example-$branch
-      close:
-        - delete: staging/example-$branch
-    merge:
-      master:
-        - test
-        - deploy: staging/example-staging
-        - copy: production/example-production
-</pre>
+The `convox.yml` file is a configuration file used to describe your application and all of its infrastructure needs. The yaml in API tab to the right demonstrates the configuration for an example application. 
+
+### The Manifest
+
+When you deploy your application, `convox.yml` is read and turned into a data structure called a "manifest". The manifest is the backbone of your application. It fully describes everything needed to run it anywhere. During the deployment process, Convox will intelligently manage all of the infrastructure needed to satisfy the manifest.
+
+In the language tabs to the right you can see how each language SDK represents the manifest. This will come in handy when you start using the SDK to interact with the Praxis API, as described later in this document.
+
+### Configurable Primitives
+
+Each stanza of the `convox.yml` file is dedicated to a different primitive. Currently, the following 7 primitives are configurable:
+
+* **Caches** - Key/value stores for volatile data
+* **Keys** - Encryption keys
+* **Queues** - Shared lists of messages
+* **Resources** - Network-attached dependencies of the app
+* **Services** - Your application process(es)
+* **Timers** - Recurring, scheduled tasks
+* **Workflows** - A list of tasks executed sequentially in response to an event
+
+In the following sections we will take a close look at each primitive and explore its configuration options.
 
 ## caches
-
-### expire
 
 ```yaml
 caches:
   sessions:
     expire: 1d
 ```
+
+### expire
 
 The default time to live for items in the cache.
 
