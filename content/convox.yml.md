@@ -136,15 +136,23 @@ The default timeout for items in a queue.
 
 ## resources
 
-### type
-
-```yaml
+```shell
 resources:
   database:
     type: postgres
 ```
 
+A resource is a network-attached dependency of your application. This example configures a PostgreSQL database called `database`.
+
+### Attributes:
+
+### type
+
 The type of resource to create.
+
+**Currently implemented resource types:**
+
+- postgres
 
 ## services
 
