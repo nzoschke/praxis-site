@@ -266,33 +266,37 @@ A range specifying the number processes that should be run for the service. The 
 
 ## timers
 
-### command
-
-```yaml
+```shell
 timers:
   cleanup:
     command: bin/cleanup
+    schedule: 0 3 * * *
+    service: web
 ```
+
+A timer is a specific task that's run repeatedly on a periodic schedule. You can think of them like Unix-style cron jobs. Timers are great for periodic maintenance tasks, queuing periodic jobs, and running reports, for example.
+
+This example configures a timer called `cleanup`. It runs the command `bin/cleanup` via the `web` service at 03:00 UTC every day.
+
+### command
 
 The command to be executed when the timer triggers.
 
 ### schedule
 
-```yaml
-timers:
-  cleanup:
-    schedule: 0 3 * * *
-```
+A cron-like schedule expression that sets when the timer will trigger. Schedule expressions use the following format. All times are UTC.
 
-A [cron-like schedule expression](#) that sets when the timer will trigger.
+<pre class="inline">
+  .---------------- minute (0 - 59)
+  |  .------------- hour (0 - 23)
+  |  |  .---------- day-of-month (1 - 31)
+  |  |  |  .------- month (1 - 12) OR JAN,FEB,MAR,APR ...
+  |  |  |  |  .---- day-of-week (1 - 7) OR SUN,MON,TUE,WED,THU,FRI,SAT
+  |  |  |  |  |
+  *  *  *  *  *
+</pre>
 
 ### service
-
-```yaml
-timers:
-  cleanup:
-    service: web
-```
 
 The service in which the command should be run.
 
