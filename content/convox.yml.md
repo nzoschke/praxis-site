@@ -212,7 +212,6 @@ manifest.Service{
 }
 ```
 
-
 Services are the blueprints for your application's processes. They are based on Docker images either specified by name or built from your code. They can be web services configured to listen on specific ports or they can be background workers processing tasks from a queue, for example.
 
 ### Attributes:
