@@ -118,13 +118,19 @@ How often to roll keys.
 
 ## queues
 
-### timeout
-
-```yaml
+```shell
 queues:
   mail:
     timeout: 1m
 ```
+
+A queue is a data structure that aids in the storage and processing of sequential messages. It can be useful for passing messages between services, such as background jobs that are added to a queue by a [timer](#timers) and then processed by a worker service, for example.
+
+This example configures a queue called `mail`. Messages in the mail queue timeout after 1 minute.
+
+### Attributes:
+
+### timeout
 
 The default timeout for items in a queue.
 
