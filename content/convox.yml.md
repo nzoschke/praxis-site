@@ -227,6 +227,8 @@ The Docker image that should be used for running the service. If you specify an 
 
 The internal container port on which the service's processes are listening. Convox will route all HTTP and HTTPS requests to the appliction to this port.
 
+Each service with open ports will be given a unique domain. You can fetch those domain names using the `cx services` CLI command.
+
 ### resources
 
 The resources enumerated in the `resources` section that should be available to the service.
