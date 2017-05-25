@@ -135,85 +135,89 @@ The type of resource to create.
 
 ## services
 
-### build
+```go
+manifest.Service{
+  Build: manifest.ServiceBuild{
+    Path: ".",
+  },
+  Certificate: "",
+  Command: manifest.ServiceCommand{
+    Development: "make dev",
+    Test: "make test",
+  },
+  Environment: []string{
+    "FOO",
+    "BAR=baz",
+  },
+  Health: manifest.ServiceHealth{
+    Interval: 5,
+    Timeout: 4,
+    Path: "/health",
+  },
+  Image: "ubuntu:16.04",
+  Port: manifest.ServicePort{
+    Port: 3000,
+    Scheme: "http",
+  },
+  Scale: manifest.ServiceScale{
+    Count: manifest.ServiceCount{
+      Min: 3,
+      Max: 3,
+    },
+    Memory: 1024,
+  },
+}
+```
 
 ```yaml
 services:
   web:
     build: .
+    command:
+      development: make dev
+      test: make test
+    environment:
+      - FOO
+      - BAR=baz
+    health: /health
+    image: ubuntu:16.04
+    port: 3000
+    resources:
+      - database
+    scale:
+      count: 3
+      memory: 1024
 ```
+
+### build
 
 The directory inside the project in which to find the Dockerfile needed to build a particular service. Paths are relative to the location of `convox.yml`.
 
 ### command
 
-```yaml
-services:
-  web:
-    command: bin/web
-```
-
 The default command to run for a particular service. This overides `CMD` in the Dockerfile.
 
 ### environment
-
-```yaml
-services:
-  web:
-    environment:
-      - FOO=bar
-```
 
 Define default environment variables for the service.
 
 ### health
 
-```yaml
-services:
-  web:
-    health: /auth
-```
-
 The path that should be requested by the balancer's HTTP healthcheck of the service.
 
 ### image
-
-```yaml
-services:
-  monitor:
-    image: my/monitor
-```
 
 The image that should be used for running the service.
 
 ### port
 
-```yaml
-services:
-  web:
-    port: http:3000
-```
-
 The protocol and port on which the process is listening.
 
 ### resources
 
-```yaml
-services:
-  api:
-    resources:
-      - database
-```
-
 The resources enumerated in the `resources` section that should be available to the service.
 
 ### scale
-
-```yaml
-services:
- web:
-  scale: 2-10
-```
 
 The range of count of processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm.
 
