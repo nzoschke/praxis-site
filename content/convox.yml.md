@@ -19,26 +19,21 @@ resources:
   database:
     type: postgres
 services:
-  api:
-    image: my/api
-    resources:
-      - database
-  monitor:
-    image: my/monitor
-    scale: 1
   web:
     build: .
     command:
-      development: bin/web-dev
-      test: bin/web-test
-      production: bin/web-prod
+      development: make dev
+      test: make test
     environment:
-      - FOO=bar
-    health: /auth
+      - FOO
+      - BAR=baz
+    health: /health
+    image: ubuntu:16.04
     port: 3000
+    resources:
+      - database
     scale:
-      count: 2-10
-      cpu: 512
+      count: 3
       memory: 1024
 timers:
   cleanup:
@@ -135,19 +130,40 @@ The type of resource to create.
 
 ## services
 
+```shell
+services:
+  web:
+    build: .
+    certificate: ${HOST}
+    command:
+      development: make dev
+      test: make test
+    environment:
+      - FOO=bar
+      - HOST
+    health: /health
+    image: ubuntu:16.04
+    port: 3000
+    resources:
+      - database
+    scale:
+      count: 3
+      memory: 1024
+```
+
 ```go
 manifest.Service{
   Build: manifest.ServiceBuild{
     Path: ".",
   },
-  Certificate: "",
+  Certificate: "www.example.com",
   Command: manifest.ServiceCommand{
     Development: "make dev",
     Test: "make test",
   },
   Environment: []string{
-    "FOO",
-    "BAR=baz",
+    "FOO=bar",
+    "HOST",
   },
   Health: manifest.ServiceHealth{
     Interval: 5,
@@ -159,6 +175,7 @@ manifest.Service{
     Port: 3000,
     Scheme: "http",
   },
+  Resources: []string{},
   Scale: manifest.ServiceScale{
     Count: manifest.ServiceCount{
       Min: 3,
@@ -169,49 +186,46 @@ manifest.Service{
 }
 ```
 
-```yaml
-services:
-  web:
-    build: .
-    command:
-      development: make dev
-      test: make test
-    environment:
-      - FOO
-      - BAR=baz
-    health: /health
-    image: ubuntu:16.04
-    port: 3000
-    resources:
-      - database
-    scale:
-      count: 3
-      memory: 1024
-```
+
+Services are the blueprints for your application's processes. They are based on Docker images either specified by name or built from your code. They can be web services configured to listen on specific ports or they can be background workers processing tasks from a queue, for example.
+
+### Attributes:
 
 ### build
 
-The directory inside the project in which to find the Dockerfile needed to build a particular service. Paths are relative to the location of `convox.yml`.
+A directory inside the project in which to find the Dockerfile needed to build a particular service. Paths are relative to the location of `convox.yml`. If the Dockerfile is in the top level directory it is not necessary to specify a build location. `build .` is shown here for illustrative purposes.
+
+### certificate
+
+Convox can automatically generate and configure SSL certificates for a specified domain. Here we have `certificate: ${HOST}`. That means a certificate should be set up for the domain specified by the `HOST` environment variable. This allows Convox to dynamically generate the correct certificate based on your current environment.
 
 ### command
 
-The default command to run for a particular service. This overides `CMD` in the Dockerfile.
+The default command to run for a particular service. If no `command` is specified, then `CMD` from the Dockerfile will be used. If `command` is specified it overides `CMD` in the Dockerfile.
 
 ### environment
 
-Define default environment variables for the service.
+A list of strings that define the service's environment variables.
+
+A pair like `FOO=bar` creates an environment variable named `FOO` with a value of `bar`.
+
+A single variable name like `HOST` simply whitelists the variable name `HOST`.
+
+You should not configure secrets here, as they would be recorded in version control. For secrets, simply whitelist the variable name, then set the actual value using the CLI `cx env set` command.
+
+You can also use the CLI to override default values set in `convox.yml`.
 
 ### health
 
-The path that should be requested by the balancer's HTTP healthcheck of the service.
+The path that should be requested by the balancer's HTTP healthcheck of the service. If you don't specify a path then the root path `/` will be used by default.
 
 ### image
 
-The image that should be used for running the service.
+The Docker image that should be used for running the service. If you specify an image, then no build will occur for this service.
 
 ### port
 
-The protocol and port on which the process is listening.
+The internal container port on which the service's processes are listening. Convox will route all HTTP and HTTPS requests to the appliction to this port.
 
 ### resources
 
@@ -219,7 +233,7 @@ The resources enumerated in the `resources` section that should be available to 
 
 ### scale
 
-The range of count of processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm.
+A range specifying the number processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm. This is optional. If you do not specify a scale then 1 process will be run for the service.
 
 ## tables
 
