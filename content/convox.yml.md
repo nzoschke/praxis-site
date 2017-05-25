@@ -92,15 +92,15 @@ A cache is a place where you can store volatile data for fast access. Some examp
 
 In this example a cache called `sessions` is set up with default item expiration of 1 day.
 
+### Attributes:
+
 ### expire
 
 The default time to live for items in the cache.
 
 ## keys
 
-### roll
-
-```yaml
+```shell
 keys:
   secret:
     roll: 30d
