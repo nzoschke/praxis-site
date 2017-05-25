@@ -82,11 +82,15 @@ In the following sections we will take a close look at each primitive and explor
 
 ## caches
 
-```yaml
+```shell
 caches:
   sessions:
     expire: 1d
 ```
+
+A cache is a place where you can store volatile data for fast access. Some example uses for a cache could be storing user sessions, web page partials for faster load times, or the results of expensive database queries. To configure a cache give it a name and a default expiration for the items in the cache.
+
+In this example a cache called `sessions` is set up with default item expiration of 1 day.
 
 ### expire
 
