@@ -302,9 +302,15 @@ The service in which the command should be run.
 
 ## workflows
 
+A workflow is a list of tasks executed sequentially in response to an event. Convox currently supports GitHub as an event source.
+
+You can use workflows to build up continuous integration / continuous delivery pipelines. They can also be useful for more targeted development and testing.
+
+There are 2 different types of workflows that you can configure, `change` and `merge`.
+
 ### change
 
-```yaml
+```shell
 workflows:
   change:
     create:
@@ -318,47 +324,35 @@ workflows:
       - delete: staging/example-$branch
 ```
 
-Actions defined within a change block take place when the state of a pull request changes. There are 3 types of changes: create, update, and close
+A `change` workflow gets triggered by the lifecycle events of a GitHub pull request.
+There are 3 types of changes: create, update, and close.
 
 #### create
-
-```yaml
-workflows:
-  change:
-    create:
-      - test
-      - create: staging/example-$branch
-      - deploy: staging/example-$branch
-```
 
 Actions defined within a create block take place when a pull request is created.
 
 #### update
 
-```yaml
-workflows:
-  change:
-    update:
-      - test
-      - deploy: staging/example-$branch
-```
-
 Actions defined within an update block take place when a pull request is updated.
 
 #### close
 
-```yaml
-workflows:
-  change:
-    close:
-      - delete: staging/example-$branch
-```
-
 Actions defined within the close block take place when a pull request is closed.
+
+**Tasks:**
+
+Within each change, a list of tasks can be defined. The possible tasks are:
+
+- **test** - Run the app's test suite
+- **create** - Create a temporary application
+- **deploy** - Deploy to the termporary appliction
+- **delete** - Delete the temporary application
+
+With these triggers and tasks you can build a "development app" workflow where an app is created when you open a pull request. As you push commits to that pull request or otherwise update its status, the app is continually tested and redeployed, keeping up with the state of your code. When you close the pull request the app is deleted, completing the development cycle.
 
 ### merge
 
-```yaml
+```shell
 workflows:
   merge:
     master:
@@ -367,4 +361,15 @@ workflows:
       - copy: production/example-production
 ```
 
-Actions defined within a merge block take place when commits are merged into or pushed directly to the specified branch.
+Actions defined within a merge workflow take place when commits are merged into or pushed directly to the specified branch. Merge workflows are useful for buiding continuous delivery pipelines.
+
+Each merge workflow is tied to a specific branch in the code repo. In this example, the workflow is triggered when commits are merged into or pushed to the `master` branch.
+
+**Tasks:**
+
+Once the workflow is triggered, a series of tasks are executed. The possible tasks are:
+
+- **test** - Run the app's test suite
+- **build** - Create a build for the specified application
+- **deploy** - Deploy to the specified appliction
+- **copy** - Copy a build created by the previous build or deploy task to the specified application
