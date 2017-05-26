@@ -360,6 +360,53 @@ workflows:
       - delete: staging/example-$branch
 ```
 
+```go
+manifest.Workflows[
+  manifest.Workflow{
+    Type: "change",
+    Trigger: "create",
+    Steps: [
+      manifest.WorkflowStep {
+        Type: "test"
+        Target: "",
+      },
+      manifest.WorkflowStep {
+        Type: "create",
+        Target: "staging/example-$branch",
+      },
+      manifest.WorkflowStep {
+        Type: "deploy",
+        Target: "staging/example-$branch",
+      },
+    ],
+  },
+  manifest.Workflow{
+    Type: "change",
+    Trigger: "update",
+    Steps: []manifest.WorkflowStep{
+      manifest.WorkflowStep {
+        Type: "test"
+        Target: "",
+      },
+      manifest.WorkflowStep {
+        Type: "deploy",
+        Target: "staging/example-$branch",
+      },
+    ],
+  },
+  manifest.Workflow{
+    Type: "change",
+    Trigger: "close",
+    Steps: [
+      manifest.WorkflowStep {
+        Type: "delete",
+        Target: "staging/example-$branch",
+      },
+    },
+  },
+}
+```
+
 A `change` workflow gets triggered by the lifecycle events of a GitHub pull request.
 There are 3 types of changes: create, update, and close.
 
@@ -395,6 +442,27 @@ workflows:
       - test
       - deploy: staging/example-staging
       - copy: production/example-production
+```
+
+```go
+manifest.Workflow{
+  Type: "merge",
+  Trigger: "master",
+  Steps: []manifest.WorkflowStep{
+    manifest.WorkflowStep{
+      Type: "test",
+      Target: "",
+    },
+    manifest.WorkflowStep{
+      Type: "deploy",
+      Target: "staging/example-staging",
+    },
+    manifest.WorkflowStep{
+      Type: "copy",
+      Target: "production/example-production
+    },
+  },
+}
 ```
 
 Actions defined within a merge workflow take place when commits are merged into or pushed directly to the specified branch. Merge workflows are useful for buiding continuous delivery pipelines.
