@@ -138,6 +138,13 @@ queues:
     timeout: 1m
 ```
 
+```go
+manifest.Queue{
+  Name: "mail",
+  Timeout: 60,
+}
+```
+
 A queue is a data structure that aids in the storage and processing of sequential messages. It can be useful for passing messages between services, such as background jobs that are added to a queue by a [timer](#timers) and then processed by a worker service, for example.
 
 This example configures a queue called `mail`. Messages in the mail queue timeout after 1 minute.
