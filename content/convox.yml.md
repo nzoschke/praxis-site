@@ -193,6 +193,7 @@ services:
 
 ```go
 manifest.Service{
+  Name: "web",
   Build: manifest.ServiceBuild{
     Path: ".",
   },
