@@ -262,8 +262,6 @@ The resources enumerated in the `resources` section that should be available to 
 
 A range specifying the number processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm. This is optional. If you do not specify a scale then 1 process will be run for the service.
 
-## tables
-
 ## timers
 
 ```shell
