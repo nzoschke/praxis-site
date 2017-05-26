@@ -113,6 +113,13 @@ keys:
     roll: 30d
 ```
 
+```go
+manifest.Key{
+  Name: "secret",
+  Roll: 2592000,
+}
+```
+
 A key is an encryption key that you can use to easily encrypt and decrypt sensitive data. For more information on how to use keys check out the [API documentation](#key).
 
 This example configures a key called `secret` that gets rolled every 30 days.
