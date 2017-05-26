@@ -301,6 +301,15 @@ timers:
     service: web
 ```
 
+```go
+manifest.Timer{
+  Name: "cleanup",
+  Command: "bin/cleanup",
+  Schedule: "0 3 * * *",
+  Service: "web",
+}
+```
+
 A timer is a specific task that's run repeatedly on a periodic schedule. You can think of them like Unix-style cron jobs. Timers are great for periodic maintenance tasks, queuing periodic jobs, and running reports, for example.
 
 This example configures a timer called `cleanup`. It runs the command `bin/cleanup` via the `web` service at 03:00 UTC every day.
