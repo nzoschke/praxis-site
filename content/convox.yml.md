@@ -163,6 +163,13 @@ resources:
     type: postgres
 ```
 
+```go
+manifest.Resource{
+  Name: "database",
+  Type: "postgres",
+}
+```
+
 A resource is a network-attached dependency of your application. This example configures a PostgreSQL database called `database`.
 
 ### Attributes:
