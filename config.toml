@@ -5,7 +5,7 @@ theme = "docuapi"
 
 # Code higlighting settings
 pygmentsCodefences = true
-pygmentsCodeFencesGuesSsyntax = false
+pygmentsCodeFencesGuessSyntax = false
 pygmentsOptions = ""
 pygmentsStyle = "monokai"
 pygmentsUseClasses = true
@@ -17,8 +17,8 @@ search = true
 
 # Configure the language example tabs.
 [[params.language_tabs]]
+name = "API"
 key = "shell"
-name = "HTTP"
 [[params.language_tabs]]
-key = "go"
 name = "Go"
+key = "go"
