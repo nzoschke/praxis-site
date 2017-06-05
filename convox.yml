@@ -4,3 +4,4 @@ services:
     command:
       test: make test
     port: 1313
+    scale: 2
