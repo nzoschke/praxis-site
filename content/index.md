@@ -9,3 +9,8 @@ Convox Praxis is a universal infrastructure interface. When you develop and depl
 
 Praxis abstracts away the underlying infrastructure by providing a set of universal primitives, a simple file format to configure them, and a standard API to interact with them. This guide will walk you through each of these concepts to give you the full set of tools you need to start developing and deploying your applications.
 
+# Getting Started
+
+Want to jump in and start using Praxis right away? Follow the [Getting Started](https://github.com/convox/praxis/blob/master/docs/getting-started.md) guide in the source repo!
+
+The rest of this site walk you through Praxis configuration details and SDK usage.
