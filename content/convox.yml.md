@@ -21,9 +21,7 @@ resources:
 services:
   web:
     build: .
-    command:
-      development: make dev
-      test: make test
+    command: bin/web
     environment:
       - FOO
       - BAR=baz
@@ -189,9 +187,7 @@ services:
   web:
     build: .
     certificate: ${HOST}
-    command:
-      development: make dev
-      test: make test
+    command: bin/web
     environment:
       - FOO=bar
       - HOST
@@ -212,10 +208,7 @@ manifest.Service{
     Path: ".",
   },
   Certificate: "www.example.com",
-  Command: manifest.ServiceCommand{
-    Development: "make dev",
-    Test: "make test",
-  },
+  Command: "bin/web",
   Environment: []string{
     "FOO=bar",
     "HOST",
