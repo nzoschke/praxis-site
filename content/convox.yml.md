@@ -33,6 +33,7 @@ services:
     scale:
       count: 3
       memory: 1024
+    test: make test
 timers:
   cleanup:
     schedule: 0 3 * * *
@@ -41,17 +42,17 @@ timers:
 workflows:
   change:
     create:
-      - test
+      - test: staging
       - create: staging/example-$branch
       - deploy: staging/example-$branch
     update:
-      - test
+      - test: staging
       - deploy: staging/example-$branch
     close:
       - delete: staging/example-$branch
   merge:
     master:
-      - test
+      - test: staging
       - deploy: staging/example-staging
       - copy: production/example-production
 ```
@@ -199,6 +200,7 @@ services:
     scale:
       count: 3
       memory: 1024
+    test: make test
 ```
 
 ```go
@@ -231,6 +233,7 @@ manifest.Service{
     },
     Memory: 1024,
   },
+  Test: "make test",
 }
 ```
 
@@ -283,6 +286,10 @@ The resources enumerated in the `resources` section that should be available to 
 ### scale
 
 A range specifying the number processes that should be run for the service. The exact value within the range is determined by an autoscaling algorithm. This is optional. If you do not specify a scale then 1 process will be run for the service.
+
+### test
+
+The test command to be invoked via `cx test` and workflow test actions.
 
 ## timers
 
