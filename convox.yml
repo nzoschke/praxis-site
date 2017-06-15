@@ -1,7 +1,7 @@
 services:
   web:
     certificate: ${HOST}
-    port: 1313
+    port: http:1313
     scale: 2
     test: make test
 workflows:
