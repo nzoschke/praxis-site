@@ -8,7 +8,6 @@ workflows:
   change:
     create:
       - test: staging
-      - create: staging/praxis-site-$branch
       - deploy: staging/praxis-site-$branch
     update:
       - test: staging
@@ -17,6 +16,5 @@ workflows:
       - delete: staging/praxis-site-$branch
   merge:
     master:
-      - test: staging
       - deploy: staging/site-staging
 
