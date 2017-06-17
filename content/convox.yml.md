@@ -428,7 +428,7 @@ Within each change, a list of tasks can be defined. The possible tasks are:
 
 - **test** - Run the app's test suite
 - **create** - Create a temporary application
-- **deploy** - Deploy to the termporary appliction
+- **deploy** - Deploy to the temporary application
 - **delete** - Delete the temporary application
 
 With these triggers and tasks you can build a "development app" workflow where an app is created when you open a pull request. As you push commits to that pull request or otherwise update its status, the app is continually tested and redeployed, keeping up with the state of your code. When you close the pull request the app is deleted, completing the development cycle.
