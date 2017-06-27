@@ -16,5 +16,6 @@ workflows:
       - delete: staging/praxis-site-$branch
   merge:
     master:
-      - deploy: staging/site-staging
+      - deploy: staging/praxis-site-staging
+      - build: production/praxis-site-production
 
